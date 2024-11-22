@@ -1,6 +1,6 @@
 import { type Metadata, type ResolvingMetadata } from 'next'
 import Link from 'next/link'
-import { IconBackground, TextLink } from 'ui'
+import { cn, IconBackground, TextLink } from 'ui'
 import { IconPanel } from 'ui-patterns/IconPanel'
 
 import MenuIconPicker from '~/components/Navigation/NavigationMenu/MenuIconPicker'
@@ -29,6 +29,7 @@ const products = [
     href: '/guides/database/overview',
     description:
       'Supabase provides a full Postgres database for every project with Realtime functionality, database backups, extensions, and more.',
+    span: 'col-span-12 md:col-span-6',
   },
   {
     title: 'Auth',
@@ -37,6 +38,7 @@ const products = [
     href: '/guides/auth',
     description:
       'Add and manage email and password, passwordless, OAuth, and mobile logins to your project through a suite of identity providers and APIs.',
+    span: 'col-span-12 md:col-span-6',
   },
   {
     title: 'Storage',
@@ -199,7 +201,7 @@ const HomePage = () => (
       <ul className="grid grid-cols-12 gap-6 not-prose [&_svg]:text-brand-600">
         {products.map((product) => {
           return (
-            <li key={product.title} className="col-span-12 md:col-span-4">
+            <li key={product.title} className={cn(product.span ?? 'col-span-12 md:col-span-4')}>
               <Link href={product.href} passHref>
                 <GlassPanelWithIconPicker {...product}>
                   {product.description}
@@ -216,9 +218,17 @@ const HomePage = () => (
             Postgres Integrations
           </h2>
         </div>
-        <div className="col-span-8 flex flex-col divide-y">
+        <div className="grid col-span-8 grid-cols-12 gap-6 not-prose">
           {postgresIntegrations.map((integration) => (
-            <PostgresIntegrationRow key={integration.title} {...integration} />
+            // <PostgresIntegrationRow key={integration.title} {...integration} />
+            <Link
+              href={integration.href}
+              key={integration.title}
+              passHref
+              className="col-span-6 md:col-span-4"
+            >
+              <IconPanelWithIconPicker {...integration} />
+            </Link>
           ))}
         </div>
       </div>
